@@ -1,38 +1,41 @@
 package com.codeup.springblog.controller;
 
-import org.springframework.stereotype.Controller;
+import com.codeup.springblog.model.Post;
+import com.codeup.springblog.repos.PostRepository;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
 public class PostController {
 
-    @GetMapping("/posts")
-    @ResponseBody
-    public String index() {
-        return "List of posts...";
+    private PostRepository postDao;
+
+    public PostController (PostRepository postDao) {
+        this.postDao = postDao;
     }
 
-    @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String show(@PathVariable long id) {
-        return "Showing post: " + id;
+    @GetMapping(path = "/post")
+    public String post(Model model) {
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
     }
 
-    @GetMapping("/posts/create")
-    @ResponseBody
-    public String create() {
-        return "Showing create post view";
+    @GetMapping(path = "/post/{id}")
+    public int postID(@PathVariable int id) {
+        return id;
     }
 
-    @PostMapping("/posts/create")
-    @ResponseBody
-    public void insert() {
+    @GetMapping(path = "/post/create")
+    public String viewPost() {
+        return "View form for creating post";
+    }
 
+    @GetMapping(path = "post/{id}/delete")
+    public String  deletePost(@PathVariable long id) {
+        postDao.delete(id);
+        return "redirect:/posts";
     }
 
 
-
-}
+    }

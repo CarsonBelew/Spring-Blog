@@ -27,7 +27,7 @@ public class Post {
     private String category;
     private boolean featuredPost;
 
-    public Post() {
+    public Post(long id, String title, String body) {
 
     }
 
