@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <title>Carson's Blog: <th:block th:text="${title}"></th:block></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 </head>
 <body>
-<div th:fragment="head">
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Rubik+Mono+One|Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
-</div>
 </body>
 </html>

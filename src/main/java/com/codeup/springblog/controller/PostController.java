@@ -1,41 +1,71 @@
 package com.codeup.springblog.controller;
 
-import com.codeup.springblog.model.Post;
+import com.codeup.springblog.model.User;
 import com.codeup.springblog.repos.PostRepository;
+import com.codeup.springblog.repos.UserRepository;
+import com.codeup.springblog.services.EmailService;
+import com.codeup.springblog.model.Post;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
+@Controller
 public class PostController {
 
     private PostRepository postDao;
+    private UserRepository userDao;
+    private final EmailService emailService;
 
-    public PostController (PostRepository postDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
+        this.userDao = userDao;
+        this.emailService = emailService;
     }
 
-    @GetMapping(path = "/post")
-    public String post(Model model) {
+    @GetMapping("/post")
+    public String postIndex(Model model) {
         model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
+//        model.addAttribute("user", userDao.findOne(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()));
+        return "post/show";
     }
 
-    @GetMapping(path = "/post/{id}")
-    public int postID(@PathVariable int id) {
-        return id;
-    }
-
-    @GetMapping(path = "/post/create")
-    public String viewPost() {
-        return "View form for creating post";
-    }
-
-    @GetMapping(path = "post/{id}/delete")
-    public String  deletePost(@PathVariable long id) {
+    @RequestMapping(path = "post/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
         postDao.delete(id);
-        return "redirect:/posts";
+        return "redirect:/post";
     }
 
 
+    @GetMapping(path = "/post/view/{id}")
+    public String Post(@PathVariable Long id, Model model) {
+        model.addAttribute("post", postDao.findOne(id));
+        return "/post/view";
     }
+
+    @RequestMapping(path = "/post/edit/{id}")
+    public String editPost(@PathVariable Long id, Model model) {
+        model.addAttribute("post", postDao.findOne(id));
+        return "post/edit";
+    }
+
+    @PostMapping("/post/edit/")
+    private String edit(@ModelAttribute Post post) {
+        postDao.save(post);
+        return "redirect:/post";
+    }
+
+    @GetMapping("/post/create")
+    private String create(Model model) {
+        model.addAttribute("post", new Post());
+        return "post/create";
+    }
+
+    @PostMapping("/post/create")
+    private String insert(@ModelAttribute Post post) {
+        post.setOwner((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        postDao.save(post);
+        emailService.prepareAndSend(post, "You added a post", "you did it!");
+        return "redirect:/post";
+    }
+}

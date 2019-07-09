@@ -1,4 +1,4 @@
-package com.codeup.springblog.controller;
+package com.codeup.springblog.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,32 +8,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MathController {
 
-    @GetMapping("/add/{num1}/and/{num2}/")
+    @GetMapping("/add/{a}/and/{b}")
     @ResponseBody
-    public double add(@PathVariable double num1, @PathVariable double num2) {
-        return num1 + num2;
+    public static String add(@PathVariable int a,@PathVariable int b){
+        return "The sum of " + a + " and " + b + " is: " + (a + b);
     }
-
-
-    @GetMapping("/subtract/{num1}/from/{num2}")
+    @GetMapping("/subtract/{a}/from/{b}")
     @ResponseBody
-    public int subtract(@PathVariable int num1, @PathVariable int num2) {
-        return num2 - num1;
+    public static String subtract(@PathVariable int a,@PathVariable int b){
+        return "The difference of  " + b + " and " + a + " is: " + (b - a);
     }
-
-    @GetMapping("/multiply/{num1}/and/{num2}")
+    @GetMapping("/multiply/{a}/and/{b}")
     @ResponseBody
-    public int multiply(@PathVariable int num1, @PathVariable int num2) {
-        return num1 * num2;
+    public static String multiply(@PathVariable int a,@PathVariable int b){
+        return "The Product of  " + a + " and " + b + " is: " + (a * b);
     }
-
-    @GetMapping("/divide/{num1}/by/{num2}")
+    @GetMapping("/divide/{a}/by/{b}")
     @ResponseBody
-    public int divide(@PathVariable int num1, @PathVariable int num2) {
-        return num1 / num2;
+    public static String divide(@PathVariable int a,@PathVariable int b){
+        return "The Quotient of " + a + " and " + b + " is: " + (a / b);
     }
-
-
-
 
 }

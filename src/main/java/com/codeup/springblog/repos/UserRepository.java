@@ -1,11 +1,10 @@
 package com.codeup.springblog.repos;
 
-
-import com.codeup.springblog.model.Post;
+import com.codeup.springblog.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostRepository extends CrudRepository<Post, Long> {
-
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findByUsername(String username);
 }

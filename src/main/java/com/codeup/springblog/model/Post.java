@@ -1,104 +1,69 @@
 package com.codeup.springblog.model;
 
+
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "posts")
 public class Post {
+
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "INT(11) UNSIGNED", name = "POST_ID")
-    private long id;
+    private Long id;
 
+    private String title;
 
-    @JoinColumn(name = "user_id")
-    private String author;
+    private String body;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    @OneToOne
+    private User owner;
 
-    @Column(name = "DATE_PUBLISHED")
-    private Date createdPost;
-
-    @Column(name = "DATE_UPDATED")
-    private Date updatedPost;
-    private Date deletedPost;
-    private String category;
-    private boolean featuredPost;
-
-    public Post(long id, String title, String body) {
-
+    public Post() {
     }
 
-    public Post(String author, Date createdPost, Date updatedPost, Date deletedPost, String content, String category, boolean featuredPost) {
-        this.author = author;
-        this.createdPost = createdPost;
-        this.updatedPost = updatedPost;
-        this.deletedPost = deletedPost;
-        this.content = content;
-        this.category = category;
-        this.featuredPost = featuredPost;
+    public Post(String title, String body, User owner) {
+        this.title = title;
+        this.body = body;
+        this.owner = owner;
     }
 
-    public long getId() {
+    public Post(Long id, String title, String body){
+        this.id = id;
+        this.title = title;
+        this.body = body;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public String getAuthor() {
-        return author;
+    public User getOwner() {
+        return owner;
     }
 
-    public Date getCreatedPost() {
-        return createdPost;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public Date getUpdatedPost() {
-        return updatedPost;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Date getDeletedPost() {
-        return deletedPost;
+    public String getTitle() {
+        return title;
     }
 
-    public String getContent() {
-        return content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getCategory() {
-        return category;
+    public String getBody() {
+        return body;
     }
 
-    public boolean isFeaturedPost() {
-        return featuredPost;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setCreatedPost(Date createdPost) {
-        this.createdPost = createdPost;
-    }
-
-    public void setUpdatedPost(Date updatedPost) {
-        this.updatedPost = updatedPost;
-    }
-
-    public void setDeletedPost(Date deletedPost) {
-        this.deletedPost = deletedPost;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setFeaturedPost(boolean featuredPost) {
-        this.featuredPost = featuredPost;
-    }
 
 }

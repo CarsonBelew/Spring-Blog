@@ -13,4 +13,8 @@ public class SpringblogApplicationTests {
 	public void contextLoads() {
 	}
 
+	public static void main(String[] args) {
+
+	}
+
 }
