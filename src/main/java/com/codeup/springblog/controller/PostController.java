@@ -26,7 +26,7 @@ public class PostController {
     @GetMapping("/")
     public String postIndex(Model model) {
         model.addAttribute("posts", postDao.findAll());
-//        model.addAttribute("user", userDao.findOne(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()));
+        model.addAttribute("user", userDao.findOne(((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()));
         return "post/show";
     }
 
@@ -52,7 +52,7 @@ public class PostController {
     @PostMapping("/post/edit/")
     private String edit(@ModelAttribute Post post) {
         postDao.save(post);
-        return "redirect:/post";
+        return "redirect:/";
     }
 
     @GetMapping("/post/create")
@@ -66,6 +66,6 @@ public class PostController {
         post.setOwner((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         postDao.save(post);
         emailService.prepareAndSend(post, "You added a post", "you did it!");
-        return "redirect:/post";
+        return "redirect:/";
     }
 }

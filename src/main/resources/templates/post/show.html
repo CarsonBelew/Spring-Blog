@@ -13,7 +13,7 @@
 
 </th:block>
 
-<h1 class="justify-content-center d-flex">Here are all post</h1>
+<h1 class="justify-content-center d-flex">Here are all posts</h1>
 <div class="container">
     <div class="row">
         <th:block th:each="post : ${posts}">
@@ -22,12 +22,14 @@
                     <h5 class="card-title" th:text="${post.title}"></h5>
                     <p class="card-text" th:text="${post.body}"></p>
                     <h6 class="card-subtitle mb-2 text-muted" th:each="post : ${post.owner}" th:text="${post.email}"></h6>
-                    <a th:href="@{/post/edit/__${post.id}__}">
+                    <th:block th:if="${post.owner == ${user}}" >
+                        <a th:href="@{/post/edit/__${post.id}__}">
                             <button class="btn btn-primary">Edit</button>
                         </a>
                         <a th:href="@{/post/delete/__${post.id}__}">
                             <button class="btn btn-danger">Delete</button>
                         </a>
+                    </th:block>
                 </div>
             </div>
         </th:block>
