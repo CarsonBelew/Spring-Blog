@@ -26,7 +26,6 @@ public class PostController {
     @GetMapping("/")
     public String postIndex(Model model) {
         model.addAttribute("posts", postDao.findAll());
-        model.addAttribute("user", userDao.findOne(((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()));
         return "post/show";
     }
 
